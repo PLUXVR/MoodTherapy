@@ -22,8 +22,8 @@ class Home extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 50),
-                    child: Text(
-                      'All toDos',
+                    child: const Text(
+                      'Дела на день',
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
                     ),
