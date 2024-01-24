@@ -1,29 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:to_do_app/constants/colors.dart';
+import 'package:to_do_app/model/todo.dart';
 
 class ToDoItem extends StatelessWidget {
-  const ToDoItem({super.key});
+  // todo обязательна для отображенгия элементов
+  const ToDoItem({super.key, required this.todo});
+
+  final ToDo todo;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      // Отступ между to do item
+      margin: const EdgeInsets.only(bottom: 15),
       child: ListTile(
         onTap: () {},
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         tileColor: Colors.white,
-        leading: const Icon(
-          Icons.check_box,
+        leading: Icon(
+          // Проверяем значение, если isDone == true - значок задачи будет помечен выполненным
+          todo.isDone
+              ? Icons.check_box
+              : Icons.check_box_outline_blank_outlined,
           color: tdBlue,
         ),
         title: Text(
-          'Нарисовать схему городка в Visio',
+          // Текст будем брать из модели
+          todo.todoText!,
           style: TextStyle(
               fontSize: 16,
               color: Colors.black,
-              decoration: TextDecoration.lineThrough),
+              // Подставляем значение из модели, если todo.isDone == true -  перечеркивается текст задачи
+              decoration: todo.isDone ? TextDecoration.lineThrough : null),
         ),
         // Квадрат красного цвета с правого края
         trailing: Container(
@@ -34,7 +44,7 @@ class ToDoItem extends StatelessWidget {
           child: IconButton(
             color: Colors.white,
             iconSize: 18,
-            icon: Icon(Icons.delete),
+            icon: const Icon(Icons.delete),
             onPressed: () {},
           ),
         ),
