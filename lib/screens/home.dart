@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/constants/colors.dart';
 import 'package:to_do_app/model/todo.dart';
+import 'package:to_do_app/widgets/outlined_icon.dart';
 import 'package:to_do_app/widgets/todo_item.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
@@ -14,32 +16,45 @@ class Home extends StatelessWidget {
       backgroundColor: tdBGColor,
       // Аппбар для бургер меню
       appBar: _buildAppBar(),
-      body: Container(
-        // Отступ от аппбара
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-        child: Column(
-          children: [
-            _searchBox(),
-            Expanded(
-              child: ListView(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 50),
-                    child: const Text(
-                      'Дела на день',
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-                    ),
+      body: Stack(
+        children: [
+          Container(
+            // Отступ от аппбара
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+            child: Column(
+              children: [
+                _searchBox(),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 50, bottom: 20),
+                        child: const Text(
+                          'Дела на день',
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      for (ToDo todoItem in todoList)
+                        ToDoItem(
+                          todo: todoItem,
+                        ),
+                    ],
                   ),
-                  for (ToDo todoItem in todoList)
-                    ToDoItem(
-                      todo: todoItem,
-                    ),
-                ],
-              ),
-            )
-          ],
-        ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        items: const [
+          OutlinedIcon(Icons.person, color: tdTeal),
+          OutlinedIcon(Icons.add_circle_outline, color: tdTeal),
+          OutlinedIcon(Icons.settings, color: tdTeal),
+        ],
+        backgroundColor: tdBGColor,
+        color: const Color.fromARGB(255, 255, 217, 2),
       ),
     );
   }

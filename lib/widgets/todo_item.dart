@@ -24,7 +24,7 @@ class ToDoItem extends StatelessWidget {
           todo.isDone
               ? Icons.check_box
               : Icons.check_box_outline_blank_outlined,
-          color: tdBlue,
+          color: tdGreen,
         ),
         title: Text(
           // Текст будем брать из модели
