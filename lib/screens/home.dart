@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:to_do_app/constants/colors.dart';
 import 'package:to_do_app/model/todo.dart';
 import 'package:to_do_app/widgets/outlined_icon.dart';
@@ -6,7 +8,7 @@ import 'package:to_do_app/widgets/todo_item.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class Home extends StatefulWidget {
-  Home({super.key});
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -16,7 +18,7 @@ class _HomeState extends State<Home> {
   final todoList = ToDo.todoList();
   final _todoController = TextEditingController();
   List<ToDo> _foundToDo = [];
-
+  final _myBox = Hive.openBox('myBox');
   @override
   void initState() {
     // Заполняем список поиска списком todoList

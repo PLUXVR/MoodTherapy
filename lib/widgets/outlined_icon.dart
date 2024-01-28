@@ -25,7 +25,7 @@ class OutlinedIcon extends StatelessWidget {
       color: color,
       shadows: List.generate(
         5,
-        (index) => Shadow(
+        (index) => const Shadow(
           blurRadius: 2,
           color: Colors.black54,
         ),

@@ -11,8 +11,8 @@ class ToDoItem extends StatelessWidget {
       required this.onDeleteItem});
 
   final ToDo todo;
-  final onToDoChanged;
-  final onDeleteItem;
+  final Function onToDoChanged;
+  final Function onDeleteItem;
 
   @override
   Widget build(BuildContext context) {
