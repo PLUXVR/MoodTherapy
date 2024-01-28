@@ -4,9 +4,15 @@ import 'package:to_do_app/model/todo.dart';
 
 class ToDoItem extends StatelessWidget {
   // todo обязательна для отображенгия элементов
-  const ToDoItem({super.key, required this.todo});
+  const ToDoItem(
+      {super.key,
+      required this.todo,
+      required this.onToDoChanged,
+      required this.onDeleteItem});
 
   final ToDo todo;
+  final onToDoChanged;
+  final onDeleteItem;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,10 @@ class ToDoItem extends StatelessWidget {
       // Отступ между to do item
       margin: const EdgeInsets.only(bottom: 15),
       child: ListTile(
-        onTap: () {},
+        // При нажатии выполняется функция onToDoChanged c аргументом todo
+        onTap: () {
+          onToDoChanged(todo);
+        },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -45,7 +54,9 @@ class ToDoItem extends StatelessWidget {
             color: Colors.white,
             iconSize: 18,
             icon: const Icon(Icons.delete),
-            onPressed: () {},
+            onPressed: () {
+              onDeleteItem(todo.id);
+            },
           ),
         ),
       ),
