@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:to_do_app/constants/colors.dart';
+import 'package:to_do_app/data/database.dart';
 import 'package:to_do_app/model/todo.dart';
 import 'package:to_do_app/widgets/outlined_icon.dart';
 import 'package:to_do_app/widgets/todo_item.dart';
@@ -19,6 +19,8 @@ class _HomeState extends State<Home> {
   final _todoController = TextEditingController();
   List<ToDo> _foundToDo = [];
   final _myBox = Hive.openBox('myBox');
+  final ToDoDatabase toDoDataBase = ToDoDatabase();
+
   @override
   void initState() {
     // Заполняем список поиска списком todoList
@@ -135,7 +137,7 @@ class _HomeState extends State<Home> {
           OutlinedIcon(Icons.settings, color: tdTeal),
         ],
         backgroundColor: tdBGColor,
-        color: const Color.fromARGB(255, 255, 217, 2),
+        color: Color.fromARGB(255, 248, 216, 75),
       ),
     );
   }
