@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:to_do_app/data/boxes.dart';
+import 'package:to_do_app/model/todo.dart';
 import 'package:to_do_app/screens/home.dart';
 
 void main() async {
   //Инициализируем Hive ассинхронно
   await Hive.initFlutter();
-
+  Hive.registerAdapter(ToDoAdapter());
   // открываем коробку
-  var box = await Hive.openBox('myBox');
+  boxToDo = await Hive.openBox<ToDo>('toDoBox');
 
   runApp(const MyApp());
 }

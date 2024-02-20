@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:to_do_app/constants/colors.dart';
-import 'package:to_do_app/data/database.dart';
+import 'package:to_do_app/data/boxes.dart';
 import 'package:to_do_app/model/todo.dart';
 import 'package:to_do_app/widgets/outlined_icon.dart';
 import 'package:to_do_app/widgets/todo_item.dart';
@@ -15,16 +14,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final todoList = ToDo.todoList();
+  List<ToDo> todoList = boxToDo.values.toList();
   final _todoController = TextEditingController();
   List<ToDo> _foundToDo = [];
-  final _myBox = Hive.openBox('myBox');
-  final ToDoDatabase toDoDataBase = ToDoDatabase();
+  // final ToDoDatabase toDoDataBase = ToDoDatabase();
 
   @override
   void initState() {
     // Заполняем список поиска списком todoList
     _foundToDo = todoList;
+    print(_foundToDo);
     super.initState();
   }
 
@@ -122,7 +121,11 @@ class _HomeState extends State<Home> {
                     size: 30,
                   ),
                   onPressed: () {
-                    _addToDoItem(_todoController.text);
+                    // Логика добавление элемента в бд
+
+                    _addToDoItem(ToDo(
+                        id: DateTime.now().millisecond,
+                        todoText: _todoController.text));
                   },
                 ),
               ),
@@ -137,7 +140,7 @@ class _HomeState extends State<Home> {
           OutlinedIcon(Icons.settings, color: tdTeal),
         ],
         backgroundColor: tdBGColor,
-        color: Color.fromARGB(255, 248, 216, 75),
+        color: const Color.fromARGB(255, 248, 216, 75),
       ),
     );
   }
@@ -150,18 +153,31 @@ class _HomeState extends State<Home> {
 
   void _deleteToDo(int id) {
     setState(() {
-      todoList.removeWhere((element) => element.id == id);
+      boxToDo.delete(id);
+      // todoList.removeWhere((element) => element.id == id);
+
+      _refreshItems();
     });
   }
 
-  void _addToDoItem(String todo) {
+  void _addToDoItem(ToDo todo) {
     setState(() {
-      int lastIdTodo = todoList.last.id!;
-      var todoNewItem = ToDo(id: lastIdTodo + 1, todoText: todo);
-      todoList.add(todoNewItem);
+      boxToDo.put('key_${todo.id}', ToDo(id: todo.id, todoText: todo.todoText));
+
+      // var todoNewItem = ToDo(id: lastIdTodo + 1, todoText: todo);
+      // todoList.add(todoNewItem);
       // print(todoNewItem.id!);
     });
     _todoController.clear();
+    _refreshItems();
+  }
+
+  void _refreshItems() {
+    setState(() {
+      _foundToDo = boxToDo.values.toList();
+      // _foundToDo = [];
+      // boxToDo.clear();
+    });
   }
 
   void _runFilter(String enteredKeyword) {
