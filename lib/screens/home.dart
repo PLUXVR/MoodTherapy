@@ -122,9 +122,8 @@ class _HomeState extends State<Home> {
                   ),
                   onPressed: () {
                     // Логика добавление элемента в бд
-
                     _addToDoItem(ToDo(
-                        id: DateTime.now().millisecond,
+                        id: _foundToDo.isEmpty ? 0 : _foundToDo.last.id! + 1,
                         todoText: _todoController.text));
                   },
                 ),
@@ -151,25 +150,22 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void _deleteToDo(int id) {
+  void _deleteToDo(String id) {
     setState(() {
       boxToDo.delete(id);
-      // todoList.removeWhere((element) => element.id == id);
-
-      _refreshItems();
+      print(id);
     });
+
+    _refreshItems();
   }
 
   void _addToDoItem(ToDo todo) {
     setState(() {
       boxToDo.put('key_${todo.id}', ToDo(id: todo.id, todoText: todo.todoText));
-
-      // var todoNewItem = ToDo(id: lastIdTodo + 1, todoText: todo);
-      // todoList.add(todoNewItem);
-      // print(todoNewItem.id!);
     });
     _todoController.clear();
     _refreshItems();
+    print('key_${todo.id} ${todo.toString()}');
   }
 
   void _refreshItems() {
