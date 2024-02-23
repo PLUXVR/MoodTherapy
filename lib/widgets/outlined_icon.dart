@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Класс для визуализации теневой обводки объекта
 class OutlinedIcon extends StatelessWidget {
   const OutlinedIcon(
     this.iconData, {

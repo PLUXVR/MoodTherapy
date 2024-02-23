@@ -145,9 +145,15 @@ class _HomeState extends State<Home> {
   }
 
   void _handleToDoChange(ToDo todo) {
+    // TO:DO доделать чтобы сохранялось в бд и сохраняло состояние выполненной задачи
     setState(() {
-      todo.isDone = !todo.isDone;
+      // todo.isDone = !todo.isDone;
+      ToDo handleHiveboxToDo =
+          boxToDo.values.toList().firstWhere((element) => element == todo);
+      handleHiveboxToDo.isDone = !todo.isDone;
+      _foundToDo = boxToDo.values.toList();
     });
+    // _refreshItems();
   }
 
   void _deleteToDo(String id) {
