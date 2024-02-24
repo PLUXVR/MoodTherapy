@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:to_do_app/constants/colors.dart';
-import 'package:to_do_app/data/database.dart';
+import 'package:to_do_app/data/boxes.dart';
 import 'package:to_do_app/model/todo.dart';
 import 'package:to_do_app/widgets/outlined_icon.dart';
 import 'package:to_do_app/widgets/todo_item.dart';
@@ -15,16 +14,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final todoList = ToDo.todoList();
+  List<ToDo> todoList = boxToDo.values.toList();
   final _todoController = TextEditingController();
   List<ToDo> _foundToDo = [];
-  final _myBox = Hive.openBox('myBox');
-  final ToDoDatabase toDoDataBase = ToDoDatabase();
+  // final ToDoDatabase toDoDataBase = ToDoDatabase();
 
   @override
   void initState() {
     // Заполняем список поиска списком todoList
     _foundToDo = todoList;
+    print(_foundToDo);
     super.initState();
   }
 
@@ -122,7 +121,10 @@ class _HomeState extends State<Home> {
                     size: 30,
                   ),
                   onPressed: () {
-                    _addToDoItem(_todoController.text);
+                    // Логика добавление элемента в бд
+                    _addToDoItem(ToDo(
+                        id: _foundToDo.isEmpty ? 0 : _foundToDo.last.id! + 1,
+                        todoText: _todoController.text));
                   },
                 ),
               ),
@@ -137,48 +139,65 @@ class _HomeState extends State<Home> {
           OutlinedIcon(Icons.settings, color: tdTeal),
         ],
         backgroundColor: tdBGColor,
-        color: Color.fromARGB(255, 248, 216, 75),
+        color: const Color.fromARGB(255, 248, 216, 75),
       ),
     );
   }
 
   void _handleToDoChange(ToDo todo) {
+    // TO:DO доделать чтобы сохранялось в бд и сохраняло состояние выполненной задачи
     setState(() {
-      todo.isDone = !todo.isDone;
+      // ToDo? boxItem = boxToDo.getAt(todo.id!);
+      // boxItem!.isDone = !todo.isDone;
+      boxToDo.put("key_${todo.id}",
+          ToDo(id: todo.id, todoText: todo.todoText, isDone: !todo.isDone));
     });
+    _refreshItems();
   }
 
-  void _deleteToDo(int id) {
+  void _deleteToDo(String id) {
     setState(() {
-      todoList.removeWhere((element) => element.id == id);
+      boxToDo.delete(id);
+      print(id);
     });
+
+    _refreshItems();
   }
 
-  void _addToDoItem(String todo) {
+  void _addToDoItem(ToDo todo) {
     setState(() {
-      int lastIdTodo = todoList.last.id!;
-      var todoNewItem = ToDo(id: lastIdTodo + 1, todoText: todo);
-      todoList.add(todoNewItem);
-      // print(todoNewItem.id!);
+      boxToDo.put('key_${todo.id}', ToDo(id: todo.id, todoText: todo.todoText));
     });
     _todoController.clear();
+    _refreshItems();
+    print('key_${todo.id} ${todo.toString()}');
   }
 
-  void _runFilter(String enteredKeyword) {
-    List<ToDo> results = [];
-    if (enteredKeyword.isEmpty) {
-      results = todoList;
-    } else {
-      // Функция поиска введенного слова
-      results = todoList
-          .where((element) =>
-              element.todoText!.toLowerCase().contains(enteredKeyword))
-          .toList();
-    }
+  void _refreshItems() {
     setState(() {
-      _foundToDo = results;
+      _foundToDo = boxToDo.values.toList();
+      // boxToDo.
+      print(_foundToDo);
+      // _foundToDo = [];
+      // boxToDo.clear();
     });
   }
+
+  // void _runFilter(String enteredKeyword) {
+  //   List<ToDo> results = [];
+  //   if (enteredKeyword.isEmpty) {
+  //     results = todoList;
+  //   } else {
+  //     // Функция поиска введенного слова
+  //     results = todoList
+  //         .where((element) =>
+  //             element.todoText!.toLowerCase().contains(enteredKeyword))
+  //         .toList();
+  //   }
+  //   setState(() {
+  //     _foundToDo = results;
+  //   });
+  // }
 
   // Строка поиска
   Column _searchBox() {
@@ -192,7 +211,7 @@ class _HomeState extends State<Home> {
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: TextField(
-            onChanged: (value) => _runFilter(value),
+            // onChanged: (value) => _runFilter(value),
             decoration: const InputDecoration(
                 contentPadding: EdgeInsets.all(3),
                 // Иконка лупы в строке поиска
@@ -228,7 +247,7 @@ class _HomeState extends State<Home> {
         ),
 
         // Контейнер для фото профиля
-        Container(
+        SizedBox(
           height: 40,
           width: 40,
           child: ClipRRect(

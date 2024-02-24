@@ -3,7 +3,7 @@ import 'package:to_do_app/constants/colors.dart';
 import 'package:to_do_app/model/todo.dart';
 
 class ToDoItem extends StatelessWidget {
-  // todo обязательна для отображенгия элементов
+  // todo обязательна для отображения элементов
   const ToDoItem(
       {super.key,
       required this.todo,
@@ -55,7 +55,7 @@ class ToDoItem extends StatelessWidget {
             iconSize: 18,
             icon: const Icon(Icons.delete),
             onPressed: () {
-              onDeleteItem(todo.id);
+              onDeleteItem("key_${todo.id}");
             },
           ),
         ),
