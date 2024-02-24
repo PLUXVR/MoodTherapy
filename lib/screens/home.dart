@@ -147,13 +147,12 @@ class _HomeState extends State<Home> {
   void _handleToDoChange(ToDo todo) {
     // TO:DO доделать чтобы сохранялось в бд и сохраняло состояние выполненной задачи
     setState(() {
-      // todo.isDone = !todo.isDone;
-      ToDo handleHiveboxToDo =
-          boxToDo.values.toList().firstWhere((element) => element == todo);
-      handleHiveboxToDo.isDone = !todo.isDone;
-      _foundToDo = boxToDo.values.toList();
+      // ToDo? boxItem = boxToDo.getAt(todo.id!);
+      // boxItem!.isDone = !todo.isDone;
+      boxToDo.put("key_${todo.id}",
+          ToDo(id: todo.id, todoText: todo.todoText, isDone: !todo.isDone));
     });
-    // _refreshItems();
+    _refreshItems();
   }
 
   void _deleteToDo(String id) {
@@ -177,26 +176,28 @@ class _HomeState extends State<Home> {
   void _refreshItems() {
     setState(() {
       _foundToDo = boxToDo.values.toList();
+      // boxToDo.
+      print(_foundToDo);
       // _foundToDo = [];
       // boxToDo.clear();
     });
   }
 
-  void _runFilter(String enteredKeyword) {
-    List<ToDo> results = [];
-    if (enteredKeyword.isEmpty) {
-      results = todoList;
-    } else {
-      // Функция поиска введенного слова
-      results = todoList
-          .where((element) =>
-              element.todoText!.toLowerCase().contains(enteredKeyword))
-          .toList();
-    }
-    setState(() {
-      _foundToDo = results;
-    });
-  }
+  // void _runFilter(String enteredKeyword) {
+  //   List<ToDo> results = [];
+  //   if (enteredKeyword.isEmpty) {
+  //     results = todoList;
+  //   } else {
+  //     // Функция поиска введенного слова
+  //     results = todoList
+  //         .where((element) =>
+  //             element.todoText!.toLowerCase().contains(enteredKeyword))
+  //         .toList();
+  //   }
+  //   setState(() {
+  //     _foundToDo = results;
+  //   });
+  // }
 
   // Строка поиска
   Column _searchBox() {
@@ -210,7 +211,7 @@ class _HomeState extends State<Home> {
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: TextField(
-            onChanged: (value) => _runFilter(value),
+            // onChanged: (value) => _runFilter(value),
             decoration: const InputDecoration(
                 contentPadding: EdgeInsets.all(3),
                 // Иконка лупы в строке поиска
@@ -246,7 +247,7 @@ class _HomeState extends State<Home> {
         ),
 
         // Контейнер для фото профиля
-        Container(
+        SizedBox(
           height: 40,
           width: 40,
           child: ClipRRect(
