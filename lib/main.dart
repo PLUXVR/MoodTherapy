@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:to_do_app/data/boxes.dart';
 import 'package:to_do_app/model/todo.dart';
-import 'package:to_do_app/screens/home.dart';
+import 'package:to_do_app/widgets/bottomNavigationBar.dart';
 
 void main() async {
   //Инициализируем Hive ассинхронно
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Home(),
+      home: const BottomNavBar(),
     );
   }
 }

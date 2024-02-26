@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/constants/colors.dart';
 import 'package:to_do_app/data/boxes.dart';
 import 'package:to_do_app/model/todo.dart';
-import 'package:to_do_app/screens/profile.dart';
-import 'package:to_do_app/screens/settings.dart';
-import 'package:to_do_app/widgets/outlined_icon.dart';
 import 'package:to_do_app/widgets/todo_item.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -18,8 +14,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final _todoController = TextEditingController();
   List<ToDo> _foundToDo = [];
-  final List<Widget> _tabItems = [Home(), Profile(), Settings()];
-  int _activePage = 0;
 
   @override
   void initState() {
@@ -133,20 +127,6 @@ class _HomeState extends State<Home> {
             ]),
           )
         ],
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        items: const [
-          OutlinedIcon(Icons.person, color: tdTeal),
-          OutlinedIcon(Icons.add_circle_outline, color: tdTeal),
-          OutlinedIcon(Icons.settings, color: tdTeal),
-        ],
-        backgroundColor: tdBGColor,
-        color: const Color.fromARGB(255, 248, 216, 75),
-        onTap: (index) {
-          setState(() {
-            _activePage = index;
-          });
-        },
       ),
     );
   }
