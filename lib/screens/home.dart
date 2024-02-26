@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/constants/colors.dart';
 import 'package:to_do_app/data/boxes.dart';
 import 'package:to_do_app/model/todo.dart';
+import 'package:to_do_app/screens/profile.dart';
+import 'package:to_do_app/screens/settings.dart';
 import 'package:to_do_app/widgets/outlined_icon.dart';
 import 'package:to_do_app/widgets/todo_item.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -14,15 +16,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<ToDo> todoList = boxToDo.values.toList();
   final _todoController = TextEditingController();
   List<ToDo> _foundToDo = [];
-  // final ToDoDatabase toDoDataBase = ToDoDatabase();
+  final List<Widget> _tabItems = [Home(), Profile(), Settings()];
+  int _activePage = 0;
 
   @override
   void initState() {
     // Заполняем список поиска списком todoList
-    _foundToDo = todoList;
+    _foundToDo = boxToDo.values.toList();
     print(_foundToDo);
     super.initState();
   }
@@ -140,15 +142,17 @@ class _HomeState extends State<Home> {
         ],
         backgroundColor: tdBGColor,
         color: const Color.fromARGB(255, 248, 216, 75),
+        onTap: (index) {
+          setState(() {
+            _activePage = index;
+          });
+        },
       ),
     );
   }
 
   void _handleToDoChange(ToDo todo) {
-    // TO:DO доделать чтобы сохранялось в бд и сохраняло состояние выполненной задачи
     setState(() {
-      // ToDo? boxItem = boxToDo.getAt(todo.id!);
-      // boxItem!.isDone = !todo.isDone;
       boxToDo.put("key_${todo.id}",
           ToDo(id: todo.id, todoText: todo.todoText, isDone: !todo.isDone));
     });
@@ -176,28 +180,28 @@ class _HomeState extends State<Home> {
   void _refreshItems() {
     setState(() {
       _foundToDo = boxToDo.values.toList();
-      // boxToDo.
       print(_foundToDo);
       // _foundToDo = [];
       // boxToDo.clear();
     });
   }
 
-  // void _runFilter(String enteredKeyword) {
-  //   List<ToDo> results = [];
-  //   if (enteredKeyword.isEmpty) {
-  //     results = todoList;
-  //   } else {
-  //     // Функция поиска введенного слова
-  //     results = todoList
-  //         .where((element) =>
-  //             element.todoText!.toLowerCase().contains(enteredKeyword))
-  //         .toList();
-  //   }
-  //   setState(() {
-  //     _foundToDo = results;
-  //   });
-  // }
+  void _runFilter(String enteredKeyword) {
+    List<ToDo> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = boxToDo.values.toList();
+    } else {
+      // Функция поиска введенного слова
+      results = boxToDo.values
+          .toList()
+          .where((element) =>
+              element.todoText!.toLowerCase().contains(enteredKeyword))
+          .toList();
+    }
+    setState(() {
+      _foundToDo = results;
+    });
+  }
 
   // Строка поиска
   Column _searchBox() {
@@ -211,7 +215,7 @@ class _HomeState extends State<Home> {
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: TextField(
-            // onChanged: (value) => _runFilter(value),
+            onChanged: (value) => _runFilter(value),
             decoration: const InputDecoration(
                 contentPadding: EdgeInsets.all(3),
                 // Иконка лупы в строке поиска
