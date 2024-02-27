@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/constants/colors.dart';
 
 class Settings extends StatefulWidget {
+  const Settings({super.key});
+
   @override
   State<StatefulWidget> createState() => _Settings();
 }
@@ -45,7 +47,10 @@ class _Settings extends State<Settings> {
                 child: Column(
                   children: [
                     // TODO менять версию при изменениях
-                    Text('Версия приложения 1.0.3'),
+                    Text(
+                      'Версия приложения 1.0.3',
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ],
                 ),
               ),

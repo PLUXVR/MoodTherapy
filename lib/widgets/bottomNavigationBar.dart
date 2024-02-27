@@ -17,9 +17,9 @@ class _BottomNavBar extends State<BottomNavBar> {
   int _page = 1;
 
   final _pageOption = [
-    ProfileApp(),
+    const ProfileApp(),
     const Home(),
-    Settings(),
+    const Settings(),
   ];
 
   @override

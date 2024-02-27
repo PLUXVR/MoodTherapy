@@ -38,6 +38,7 @@ dependencies:
   curved_navigation_bar: ^1.0.3 
   hive: ^2.2.3
   hive_flutter: ^1.1.0 
+  lottie:
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -62,6 +63,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/lottie/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
