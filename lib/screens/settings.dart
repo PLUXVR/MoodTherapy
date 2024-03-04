@@ -48,7 +48,7 @@ class _Settings extends State<Settings> {
                   children: [
                     // TODO менять версию при изменениях
                     Text(
-                      'Версия приложения 1.0.3',
+                      'Версия приложения 1.0.4',
                       style: TextStyle(fontSize: 20),
                     ),
                   ],

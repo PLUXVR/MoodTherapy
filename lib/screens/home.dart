@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:to_do_app/constants/colors.dart';
 import 'package:to_do_app/data/boxes.dart';
 import 'package:to_do_app/model/todo.dart';
@@ -39,25 +40,28 @@ class _HomeState extends State<Home> {
                 // Строка поиска
                 _searchBox(),
                 Expanded(
-                  child: ListView(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 50, bottom: 20),
-                        child: const Text(
-                          'Дела на день',
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.w500),
+                  child: _foundToDo.isEmpty
+                      ? Lottie.asset('assets/lottie/relax.json')
+                      : ListView(
+                          children: [
+                            Container(
+                              margin:
+                                  const EdgeInsets.only(top: 50, bottom: 20),
+                              child: const Text(
+                                'Дела на день',
+                                style: TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            // Основная функция вывода о информации задач
+                            for (ToDo todoItem in _foundToDo.reversed)
+                              ToDoItem(
+                                todo: todoItem,
+                                onToDoChanged: _handleToDoChange,
+                                onDeleteItem: _deleteToDo,
+                              ),
+                          ],
                         ),
-                      ),
-                      // Основная функция вывода о информации задач
-                      for (ToDo todoItem in _foundToDo.reversed)
-                        ToDoItem(
-                          todo: todoItem,
-                          onToDoChanged: _handleToDoChange,
-                          onDeleteItem: _deleteToDo,
-                        ),
-                    ],
-                  ),
                 )
               ],
             ),

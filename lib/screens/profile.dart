@@ -11,7 +11,7 @@ class ProfileApp extends StatelessWidget {
     String allToDo = boxToDo.length.toString();
     String allDoneToDo =
         boxToDo.values.where((element) => element.isDone).length.toString();
-    int vibe = 40;
+    int vibe = 100;
 
     return Scaffold(
       backgroundColor: tdBGColor,
@@ -224,8 +224,22 @@ class ProfileApp extends StatelessWidget {
 
 String getVibe(int vibe) {
   switch (vibe) {
-    case 40:
+    case > 100:
+      return 'assets/lottie/star.json';
+    case >= 90 && <= 100:
+      return 'assets/lottie/star.json';
+    case >= 80 && < 90:
+      return 'assets/lottie/smile.json';
+    case >= 70 && < 80:
+      return 'assets/lottie/funny.json';
+    case >= 60 && < 70:
+      return 'assets/lottie/eye.json';
+    case >= 50 && < 60:
+      return 'assets/lottie/nothing.json';
+    case >= 40 && < 50:
       return 'assets/lottie/gloomy.json';
+    case >= 20 && < 40:
+      return 'assets/lottie/sad.json';
     default:
       return 'assets/lottie/very_sad.json';
   }
