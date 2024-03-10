@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:to_do_app/constants/colors.dart';
 import 'package:to_do_app/data/boxes.dart';
+import 'package:to_do_app/screens/motivation.dart';
+import 'package:to_do_app/widgets/motivatedItem.dart';
 
 class ProfileApp extends StatelessWidget {
   const ProfileApp({super.key});
@@ -11,7 +13,7 @@ class ProfileApp extends StatelessWidget {
     String allToDo = boxToDo.length.toString();
     String allDoneToDo =
         boxToDo.values.where((element) => element.isDone).length.toString();
-    int vibe = 100;
+    int vibe = 50;
 
     return Scaffold(
       backgroundColor: tdBGColor,
@@ -148,74 +150,7 @@ class ProfileApp extends StatelessWidget {
                   ),
                 ),
               )),
-
-          allToDo == allDoneToDo
-              ?
-
-              // TODO Место под дополнительную информацию
-              const Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 30.0, horizontal: 16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Bio:",
-                        style: TextStyle(
-                            color: tdRed,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 28.0),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Text(
-                        'My name is Alice and I am  a freelance mobile app developper.\n'
-                        'if you need any mobile app for your company then contact me for more informations',
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black,
-                          letterSpacing: 2.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : Text('ddd')
-          // const SizedBox(
-          //   height: 20.0,
-          // ),
-          // SizedBox(
-          //   width: 300.00,
-          //   child: FloatingActionButton(
-          //       onPressed: () {},
-          //       shape: RoundedRectangleBorder(
-          //           borderRadius: BorderRadius.circular(80.0)),
-          //       elevation: 0.0,
-          //       child: Ink(
-          //         decoration: BoxDecoration(
-          //           gradient: const LinearGradient(
-          //               begin: Alignment.centerRight,
-          //               end: Alignment.centerLeft,
-          //               colors: [tdRed, tdRed]),
-          //           borderRadius: BorderRadius.circular(30.0),
-          //         ),
-          //         child: Container(
-          //           constraints:
-          //               const BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-          //           alignment: Alignment.center,
-          //           child: const Text(
-          //             "Contact me",
-          //             style: TextStyle(
-          //                 color: tdBGColor,
-          //                 fontSize: 26.0,
-          //                 fontWeight: FontWeight.w300),
-          //           ),
-          //         ),
-          //       )),
-          // ),
+          allToDo == allDoneToDo ? const Text('aaa') : const MotivatedItem()
         ],
       ),
     );

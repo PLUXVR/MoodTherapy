@@ -11,7 +11,6 @@ void main() async {
   Hive.registerAdapter(ToDoAdapter());
   // открываем коробку
   boxToDo = await Hive.openBox<ToDo>('toDoBox');
-
   runApp(const MyApp());
 }
 
