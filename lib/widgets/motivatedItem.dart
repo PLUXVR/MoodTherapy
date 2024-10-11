@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share/share.dart';
 import 'package:to_do_app/constants/colors.dart';
-import 'package:to_do_app/model/motivated.dart';
 import 'package:path_provider/path_provider.dart';
 
 class MotivatedItem extends StatefulWidget {
@@ -48,7 +47,7 @@ class _MotivationTasksClassState extends State<MotivatedItem> {
         working = true;
         quote = imglink = owner = "";
       });
-      var response = await http.post(
+      var response = await http.get(
           Uri.encodeFull('http://api.forismatic.com/api/1.0/'),
           body: {"method": "getQuote", "format": "json", "lang": "en"});
       setState(() {
@@ -62,6 +61,7 @@ class _MotivationTasksClassState extends State<MotivatedItem> {
         }
       });
     } catch (e) {
+      print('${e.toString()} dddd');
       offline();
     }
   }

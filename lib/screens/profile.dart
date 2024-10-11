@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:to_do_app/constants/colors.dart';
 import 'package:to_do_app/data/boxes.dart';
-import 'package:to_do_app/screens/motivation.dart';
 import 'package:to_do_app/widgets/motivatedItem.dart';
 
 class ProfileApp extends StatelessWidget {
@@ -13,7 +12,7 @@ class ProfileApp extends StatelessWidget {
     String allToDo = boxToDo.length.toString();
     String allDoneToDo =
         boxToDo.values.where((element) => element.isDone).length.toString();
-    int vibe = 50;
+    int vibe = 70;
 
     return Scaffold(
       backgroundColor: tdBGColor,
@@ -117,7 +116,7 @@ class ProfileApp extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              const Expanded(
+                              Expanded(
                                 child: Column(
                                   children: <Widget>[
                                     Text(
@@ -133,7 +132,7 @@ class ProfileApp extends StatelessWidget {
                                       height: 5.0,
                                     ),
                                     Text(
-                                      "1300",
+                                      vibe.toString(),
                                       style: TextStyle(
                                         fontSize: 27.0,
                                         color: tdGreen,

@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:to_do_app/constants/colors.dart';
 import 'package:to_do_app/data/boxes.dart';
 import 'package:to_do_app/model/todo.dart';
+import 'package:to_do_app/widgets/default_appbar.dart';
 import 'package:to_do_app/widgets/todo_item.dart';
 
 class Home extends StatefulWidget {
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: tdBGColor,
       // Аппбар для бургер меню
-      appBar: _buildAppBar(),
+      appBar: DefaultAppBar(),
       body: Stack(
         children: [
           Container(
@@ -219,32 +220,6 @@ class _HomeState extends State<Home> {
       )
     ]);
   }
-
-  // Аппбар
-  AppBar _buildAppBar() {
-    return AppBar(
-      backgroundColor: tdBGColor,
-      elevation: 0,
-      title:
-          // Для строки добавить расстояние между элементами и прибить их тем самым по краям строки
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        const Icon(
-          Icons.menu,
-          color: tdBlack,
-          size: 30,
-        ),
-
-        // Контейнер для фото профиля
-        SizedBox(
-          height: 40,
-          width: 40,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            // Прежде чем использовать, необходимо прописать ссылку в pubspec
-            child: Image.asset('assets/images/avatar.jpeg'),
-          ),
-        )
-      ]),
-    );
-  }
 }
+
+
