@@ -25,9 +25,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     _foundToDo = boxToDo.values.toList();
     print(_foundToDo);
     super.initState();
+    // Объявляем контроллер для гибкой настройки анимации
     _controller = AnimationController(
     vsync: this, 
-    duration: const Duration(seconds: 4),
+    duration: const Duration(seconds: 5),
   );
   
     _controller.repeat();
