@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/constants/colors.dart';
+import 'package:lottie/lottie.dart';
+import 'package:to_do_app/core/resources/constants/colors.dart';
 import 'package:to_do_app/data/boxes.dart';
-import 'package:to_do_app/model/todo.dart';
-import 'package:to_do_app/widgets/outlined_icon.dart';
-import 'package:to_do_app/widgets/todo_item.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:to_do_app/core/model/todo.dart';
+import 'package:to_do_app/core/widgets/default_appbar.dart';
+import 'package:to_do_app/core/widgets/todo_item.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,18 +13,24 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
-  List<ToDo> todoList = boxToDo.values.toList();
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final _todoController = TextEditingController();
+  late AnimationController _controller;
   List<ToDo> _foundToDo = [];
-  // final ToDoDatabase toDoDataBase = ToDoDatabase();
 
   @override
   void initState() {
+    
     // Заполняем список поиска списком todoList
-    _foundToDo = todoList;
+    _foundToDo = boxToDo.values.toList();
     print(_foundToDo);
     super.initState();
+    _controller = AnimationController(
+    vsync: this, 
+    duration: const Duration(seconds: 4),
+  );
+  
+    _controller.repeat();
   }
 
   @override
@@ -32,7 +38,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: tdBGColor,
       // Аппбар для бургер меню
-      appBar: _buildAppBar(),
+      appBar: DefaultAppBar(),
       body: Stack(
         children: [
           Container(
@@ -43,25 +49,28 @@ class _HomeState extends State<Home> {
                 // Строка поиска
                 _searchBox(),
                 Expanded(
-                  child: ListView(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 50, bottom: 20),
-                        child: const Text(
-                          'Дела на день',
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.w500),
+                  child: _foundToDo.isEmpty
+                      ? Lottie.asset('assets/lottie/relax.json', controller: _controller)
+                      : ListView(
+                          children: [
+                            Container(
+                              margin:
+                                  const EdgeInsets.only(top: 50, bottom: 20),
+                              child: const Text(
+                                'Дела на день',
+                                style: TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            // Основная функция вывода о информации задач
+                            for (ToDo todoItem in _foundToDo.reversed)
+                              ToDoItem(
+                                todo: todoItem,
+                                onToDoChanged: _handleToDoChange,
+                                onDeleteItem: _deleteToDo,
+                              ),
+                          ],
                         ),
-                      ),
-                      // Основная функция вывода о информации задач
-                      for (ToDo todoItem in _foundToDo.reversed)
-                        ToDoItem(
-                          todo: todoItem,
-                          onToDoChanged: _handleToDoChange,
-                          onDeleteItem: _deleteToDo,
-                        ),
-                    ],
-                  ),
                 )
               ],
             ),
@@ -132,23 +141,11 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        items: const [
-          OutlinedIcon(Icons.person, color: tdTeal),
-          OutlinedIcon(Icons.add_circle_outline, color: tdTeal),
-          OutlinedIcon(Icons.settings, color: tdTeal),
-        ],
-        backgroundColor: tdBGColor,
-        color: const Color.fromARGB(255, 248, 216, 75),
-      ),
     );
   }
 
   void _handleToDoChange(ToDo todo) {
-    // TO:DO доделать чтобы сохранялось в бд и сохраняло состояние выполненной задачи
     setState(() {
-      // ToDo? boxItem = boxToDo.getAt(todo.id!);
-      // boxItem!.isDone = !todo.isDone;
       boxToDo.put("key_${todo.id}",
           ToDo(id: todo.id, todoText: todo.todoText, isDone: !todo.isDone));
     });
@@ -176,28 +173,28 @@ class _HomeState extends State<Home> {
   void _refreshItems() {
     setState(() {
       _foundToDo = boxToDo.values.toList();
-      // boxToDo.
       print(_foundToDo);
       // _foundToDo = [];
       // boxToDo.clear();
     });
   }
 
-  // void _runFilter(String enteredKeyword) {
-  //   List<ToDo> results = [];
-  //   if (enteredKeyword.isEmpty) {
-  //     results = todoList;
-  //   } else {
-  //     // Функция поиска введенного слова
-  //     results = todoList
-  //         .where((element) =>
-  //             element.todoText!.toLowerCase().contains(enteredKeyword))
-  //         .toList();
-  //   }
-  //   setState(() {
-  //     _foundToDo = results;
-  //   });
-  // }
+  void _runFilter(String enteredKeyword) {
+    List<ToDo> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = boxToDo.values.toList();
+    } else {
+      // Функция поиска введенного слова
+      results = boxToDo.values
+          .toList()
+          .where((element) =>
+              element.todoText!.toLowerCase().contains(enteredKeyword))
+          .toList();
+    }
+    setState(() {
+      _foundToDo = results;
+    });
+  }
 
   // Строка поиска
   Column _searchBox() {
@@ -211,7 +208,7 @@ class _HomeState extends State<Home> {
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: TextField(
-            // onChanged: (value) => _runFilter(value),
+            onChanged: (value) => _runFilter(value),
             decoration: const InputDecoration(
                 contentPadding: EdgeInsets.all(3),
                 // Иконка лупы в строке поиска
@@ -231,32 +228,6 @@ class _HomeState extends State<Home> {
       )
     ]);
   }
-
-  // Аппбар
-  AppBar _buildAppBar() {
-    return AppBar(
-      backgroundColor: tdBGColor,
-      elevation: 0,
-      title:
-          // Для строки добавить расстояние между элементами и прибить их тем самым по краям строки
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        const Icon(
-          Icons.menu,
-          color: tdBlack,
-          size: 30,
-        ),
-
-        // Контейнер для фото профиля
-        SizedBox(
-          height: 40,
-          width: 40,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            // Прежде чем использовать, необходимо прописать ссылку в pubspec
-            child: Image.asset('assets/images/avatar.jpeg'),
-          ),
-        )
-      ]),
-    );
-  }
 }
+
+

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/constants/colors.dart';
-import 'package:to_do_app/model/todo.dart';
+import 'package:to_do_app/core/resources/constants/colors.dart';
+import 'package:to_do_app/core/model/todo.dart';
 
 class ToDoItem extends StatelessWidget {
   // todo обязательна для отображения элементов
