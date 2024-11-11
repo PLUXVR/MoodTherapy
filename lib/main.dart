@@ -9,7 +9,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ToDoAdapter());
   // открываем коробку
-  boxToDo = await Hive.openBox<ToDo>('toDoBox');
+  boxToDo = await Hive.openBox<ToDo>('boxtodo');
 
   runApp(const Application());
 }
