@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:to_do_app/constants/colors.dart';
+import 'package:to_do_app/core/resources/constants/colors.dart';
 import 'package:to_do_app/data/boxes.dart';
-import 'package:to_do_app/widgets/motivatedItem.dart';
+import 'package:to_do_app/core/widgets/motivatedItem.dart';
 
 class ProfileApp extends StatelessWidget {
   const ProfileApp({super.key});

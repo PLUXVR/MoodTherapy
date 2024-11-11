@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/constants/colors.dart';
+import 'package:to_do_app/core/resources/constants/colors.dart';
 
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DefaultAppBar({

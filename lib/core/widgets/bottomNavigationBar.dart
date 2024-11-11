@@ -1,10 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do_app/constants/colors.dart';
-import 'package:to_do_app/screens/home.dart';
-import 'package:to_do_app/screens/profile.dart';
-import 'package:to_do_app/screens/settings.dart';
-import 'package:to_do_app/widgets/outlined_icon.dart';
+import 'package:to_do_app/core/resources/constants/colors.dart';
+import 'package:to_do_app/feature/home_page/home.dart';
+import 'package:to_do_app/feature/profile_page/profile.dart';
+import 'package:to_do_app/feature/settings_page/settings.dart';
+import 'package:to_do_app/core/widgets/outlined_icon.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});

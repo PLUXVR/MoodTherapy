@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:to_do_app/constants/colors.dart';
+import 'package:to_do_app/core/resources/constants/colors.dart';
 import 'package:to_do_app/data/boxes.dart';
-import 'package:to_do_app/model/todo.dart';
-import 'package:to_do_app/widgets/default_appbar.dart';
-import 'package:to_do_app/widgets/todo_item.dart';
+import 'package:to_do_app/core/model/todo.dart';
+import 'package:to_do_app/core/widgets/default_appbar.dart';
+import 'package:to_do_app/core/widgets/todo_item.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,16 +13,24 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final _todoController = TextEditingController();
+  late AnimationController _controller;
   List<ToDo> _foundToDo = [];
 
   @override
   void initState() {
+    
     // Заполняем список поиска списком todoList
     _foundToDo = boxToDo.values.toList();
     print(_foundToDo);
     super.initState();
+    _controller = AnimationController(
+    vsync: this, 
+    duration: const Duration(seconds: 4),
+  );
+  
+    _controller.repeat();
   }
 
   @override
@@ -42,7 +50,7 @@ class _HomeState extends State<Home> {
                 _searchBox(),
                 Expanded(
                   child: _foundToDo.isEmpty
-                      ? Lottie.asset('assets/lottie/relax.json')
+                      ? Lottie.asset('assets/lottie/relax.json', controller: _controller)
                       : ListView(
                           children: [
                             Container(
