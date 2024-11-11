@@ -20,7 +20,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    
     // Заполняем список поиска списком todoList
     _foundToDo = boxToDo.values.toList();
     print(_foundToDo);
@@ -30,8 +29,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     vsync: this, 
     duration: const Duration(seconds: 5),
   );
-  
+    // Повтор анимации после окончания Duration
     _controller.repeat();
+  }
+
+  @override
+  void dispose() {
+    // Контроллер необходимо удалять
+    _controller.dispose();
+    super.dispose();
+    
   }
 
   @override
