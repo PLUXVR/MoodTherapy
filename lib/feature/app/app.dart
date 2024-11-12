@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:to_do_app/core/widgets/bottomNavigationBar.dart';
+import 'package:to_do_app/core/widgets/bottom_navigation_bar.dart';
 
 class Application extends StatelessWidget {
   const Application({super.key});

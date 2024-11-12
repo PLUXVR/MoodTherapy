@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:to_do_app/core/resources/constants/colors.dart';
+import 'package:to_do_app/core/widgets/search_widget.dart';
 import 'package:to_do_app/data/boxes.dart';
 import 'package:to_do_app/core/model/todo.dart';
 import 'package:to_do_app/core/widgets/default_appbar.dart';
 import 'package:to_do_app/core/widgets/todo_item.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({
+    super.key,
+  });
 
   @override
   State<Home> createState() => _HomeState();
 }
 
+// SingleTickerProviderStateMixin для AnimationController (vsync: this)
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final _todoController = TextEditingController();
   late AnimationController _controller;
@@ -26,9 +30,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.initState();
     // Объявляем контроллер для гибкой настройки анимации
     _controller = AnimationController(
-    vsync: this, 
-    duration: const Duration(seconds: 5),
-  );
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    );
     // Повтор анимации после окончания Duration
     _controller.repeat();
   }
@@ -38,7 +42,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     // Контроллер необходимо удалять
     _controller.dispose();
     super.dispose();
-    
   }
 
   @override
@@ -55,10 +58,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             child: Column(
               children: [
                 // Строка поиска
-                _searchBox(),
+                SearchWidget(filterFunction: _runFilter,),
                 Expanded(
                   child: _foundToDo.isEmpty
-                      ? Lottie.asset('assets/lottie/relax.json', controller: _controller)
+                      ? Lottie.asset('assets/lottie/relax.json',
+                          controller: _controller)
                       : ListView(
                           children: [
                             Container(
@@ -205,37 +209,5 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   // Строка поиска
-  Column _searchBox() {
-    return Column(children: [
-      Padding(
-        // Горизонтальные отступы от краев экрана
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Container(
-          // Отступ от края в текстовом поле
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(20)),
-          child: TextField(
-            onChanged: (value) => _runFilter(value),
-            decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(3),
-                // Иконка лупы в строке поиска
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: tdBlack,
-                  size: 20,
-                ),
-                prefixIconConstraints:
-                    BoxConstraints(maxHeight: 20, minWidth: 25),
-                // Отсутствие линии нижней грани
-                border: InputBorder.none,
-                hintText: 'Поиск',
-                hintStyle: TextStyle(color: tdGrey)),
-          ),
-        ),
-      )
-    ]);
-  }
+  
 }
-
-

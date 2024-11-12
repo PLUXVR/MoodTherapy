@@ -4,11 +4,12 @@ import 'package:to_do_app/core/model/todo.dart';
 
 class ToDoItem extends StatelessWidget {
   // todo обязательна для отображения элементов
-  const ToDoItem(
-      {super.key,
-      required this.todo,
-      required this.onToDoChanged,
-      required this.onDeleteItem});
+  const ToDoItem({
+    super.key,
+    required this.todo,
+    required this.onToDoChanged,
+    required this.onDeleteItem,
+  });
 
   final ToDo todo;
   final Function onToDoChanged;
