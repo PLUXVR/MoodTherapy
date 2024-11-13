@@ -8,8 +8,8 @@ void main() async {
   //Инициализируем Hive ассинхронно
   await Hive.initFlutter();
   Hive.registerAdapter(ToDoAdapter());
-  // открываем коробку
+  // Открываем коробку и даем ей название
   boxToDo = await Hive.openBox<ToDo>('boxtodo');
-
+  
   runApp(const Application());
 }

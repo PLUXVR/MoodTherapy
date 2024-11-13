@@ -33,7 +33,7 @@ class _BottomNavBar extends State<BottomNavBar> {
           OutlinedIcon(Icons.settings, color: tdTeal),
         ],
         backgroundColor: tdBGColor,
-
+        
         color: tdYellow,
         onTap: (index) {
           setState(() {
