@@ -12,7 +12,7 @@ class ProfileApp extends StatelessWidget {
     String allToDo = boxToDo.length.toString();
     String allDoneToDo =
         boxToDo.values.where((element) => element.isDone).length.toString();
-    int vibe = 70;
+    int vibe = 100;
 
     return Scaffold(
       backgroundColor: tdBGColor,
