@@ -57,9 +57,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 // Строка поиска
                 _searchBox(),
                 Expanded(
-                  child: _foundToDo.isEmpty
+                  child: 
+                  _foundToDo.isEmpty
                       ? Lottie.asset('assets/lottie/relax.json', controller: _controller)
-                      : ListView(
+                      : 
+                      ListView(
                           children: [
                             Container(
                               margin:
