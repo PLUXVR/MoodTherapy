@@ -12,7 +12,7 @@ class ProfileApp extends StatelessWidget {
     String allToDo = boxToDo.length.toString();
     String allDoneToDo =
         boxToDo.values.where((element) => element.isDone).length.toString();
-    int vibe = 100;
+    int vibe = 0;
 
     return Scaffold(
       backgroundColor: tdBGColor,
@@ -157,24 +157,14 @@ class ProfileApp extends StatelessWidget {
 }
 
 String getVibe(int vibe) {
-  switch (vibe) {
-    case > 100:
-      return 'assets/lottie/star.json';
-    case >= 90 && <= 100:
-      return 'assets/lottie/star.json';
-    case >= 80 && < 90:
-      return 'assets/lottie/smile.json';
-    case >= 70 && < 80:
-      return 'assets/lottie/funny.json';
-    case >= 60 && < 70:
-      return 'assets/lottie/eye.json';
-    case >= 50 && < 60:
-      return 'assets/lottie/nothing.json';
-    case >= 40 && < 50:
-      return 'assets/lottie/gloomy.json';
-    case >= 20 && < 40:
-      return 'assets/lottie/sad.json';
-    default:
-      return 'assets/lottie/very_sad.json';
-  }
+  if (vibe >= 90 && vibe <= 100) return 'assets/lottie/smile100.json';
+  if (vibe >= 80 && vibe < 90) return 'assets/lottie/smile90.json';
+  if (vibe >= 70 && vibe < 80) return 'assets/lottie/smile80.json';
+  if (vibe >= 60 && vibe < 70) return 'assets/lottie/smile70.json';
+  if (vibe >= 50 && vibe < 60) return 'assets/lottie/smile60.json';
+  if (vibe >= 40 && vibe < 50) return 'assets/lottie/smile50.json';
+  if (vibe >= 30 && vibe < 40) return 'assets/lottie/smile40.json';
+  if (vibe >= 20 && vibe < 30) return 'assets/lottie/smile30.json';
+  if (vibe >= 10 && vibe < 20) return 'assets/lottie/smile20.json';
+  return 'assets/lottie/smile10.json';
 }
