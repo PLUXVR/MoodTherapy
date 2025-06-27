@@ -8,6 +8,7 @@ import 'package:to_do_app/core/resources/constants/colors.dart';
 import 'package:to_do_app/core/model/todo.dart';
 import 'package:to_do_app/core/widgets/default_appbar.dart';
 import 'package:to_do_app/core/widgets/todo_item.dart';
+import 'package:to_do_app/data/boxes.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -213,19 +214,94 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _searchBox() {
+  // void _handleToDoChange(ToDo todo) {
+  //   setState(() {
+  //     boxToDo.put("key_${todo.id}",
+  //         ToDo(id: todo.id, todoText: todo.todoText, isDone: !todo.isDone));
+  //   });
+  //   _refreshItems();
+  // }
+
+  // void _deleteToDo(String id) {
+  //   setState(() {
+  //     boxToDo.delete(id);
+  //     print(id);
+  //   });
+
+  //   _refreshItems();
+  // }
+
+  // void _addToDoItem(ToDo todo) {
+  //   setState(() {
+  //     boxToDo.put('key_${todo.id}', ToDo(id: todo.id, todoText: todo.todoText));
+  //   });
+  //   _todoController.clear();
+  //   _refreshItems();
+  //   print('key_${todo.id} ${todo.toString()}');
+  // }
+
+// Наполнение 10 задач
+// void _addAllToDoItem(List<ToDo> todoList) async {
+//   try {
+//     final Map<dynamic, ToDo> todoMap = {
+//       for (var todo in todoList) todo.id: todo
+//     };
+    
+//     await boxToDo.putAll(todoMap);
+    
+//     setState(() {
+//       _refreshItems();
+//     });
+    
+//     print('Добавлены элементы: ${todoList.toString()}');
+//   } catch (e) {
+//     print('Ошибка при добавлении элементов: $e');
+//   }
+// }
+
+
+  // void _refreshItems() {
+  //   setState(() {
+  //     _foundToDo = boxToDo.values.toList();
+  //     print(_foundToDo);
+  //     // _foundToDo = [];
+  //     // boxToDo.clear();
+  //   });
+  // }
+
+  // void _runFilter(String enteredKeyword) {
+  //   List<ToDo> results = [];
+  //   if (enteredKeyword.isEmpty) {
+  //     results = boxToDo.values.toList();
+  //   } else {
+  //     // Функция поиска введенного слова
+  //     results = boxToDo.values
+  //         .toList()
+  //         .where((element) =>
+  //             element.todoText!.toLowerCase().contains(enteredKeyword))
+  //         .toList();
+  //   }
+  //   setState(() {
+  //     _foundToDo = results;
+  //   });
+  // }
+
+  // Строка поиска
+  Column _searchBox() {
     return Column(children: [
       Padding(
+        // Горизонтальные отступы от краев экрана
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Container(
+          // Отступ от края в текстовом поле
           padding: const EdgeInsets.symmetric(horizontal: 15),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: TextField(
-            controller: _searchController,
-            onChanged: _runFilter,
+            onChanged: (value) => _runFilter(value),
             decoration: const InputDecoration(
                 contentPadding: EdgeInsets.all(3),
+                // Иконка лупы в строке поиска
                 prefixIcon: Icon(
                   Icons.search,
                   color: tdBlack,
@@ -233,8 +309,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ),
                 prefixIconConstraints:
                     BoxConstraints(maxHeight: 20, minWidth: 25),
+                // Отсутствие линии нижней грани
                 border: InputBorder.none,
-                hintText: 'Search',
+                hintText: 'Поиск',
                 hintStyle: TextStyle(color: tdGrey)),
           ),
         ),
